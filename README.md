@@ -23,8 +23,8 @@ allprojects {
 ```
 #### Step 2. 需要使用的模块内引入
 ```gradle
-implementation 'com.github.CodingGay.BlackReflection:core:1.0.9' //需要替换一下
-annotationProcessor 'com.github.CodingGay.BlackReflection:compiler:1.0.9'
+implementation 'com.github.ming123aaa.BlackReflection:core:1.0.0' 
+annotationProcessor 'com.github.ming123aaa.BlackReflection:compiler:1.0.0'
  implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:4.3'  //加入反射隐藏api 不反射隐藏api不用引入
 ```
 
