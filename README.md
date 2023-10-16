@@ -17,14 +17,66 @@ allprojects {
         ...
         // 加入仓库
         maven { url 'https://jitpack.io' }
+        mavenCentral()
     }
 }
 ```
 #### Step 2. 需要使用的模块内引入
 ```gradle
-implementation 'com.github.CodingGay.BlackReflection:core:1.0.9'
+implementation 'com.github.CodingGay.BlackReflection:core:1.0.9' //需要替换一下
 annotationProcessor 'com.github.CodingGay.BlackReflection:compiler:1.0.9'
+ implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:4.3'  //加入反射隐藏api 不反射隐藏api不用引入
 ```
+
+#### Step 3 设置系统隐藏api反射  如果不反射隐藏api跳过
+复制以下代码
+```java
+import android.os.Build;
+import org.lsposed.hiddenapibypass.HiddenApiBypass;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+
+import top.niunaijun.blackreflection.utils.ReflectorApi;
+
+public class HideApiUtil implements ReflectorApi {
+
+    public  Field findField(Class<?> aClass,String name){
+        if (name==null){
+            return null;
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            List<Field> staticField = HiddenApiBypass.getStaticFields(aClass);
+            for (Field field : staticField) {
+                if (name.equals(field.getName())){
+                    return field;
+                }
+            }
+            List<Field> instanceFields = HiddenApiBypass.getInstanceFields(aClass);
+            for (Field instanceField : instanceFields) {
+                if (name.equals(instanceField.getName())){
+                    return instanceField;
+                }
+            }
+        }
+        return null;
+    }
+
+    public  Method getDeclaredMethod( Class<?> clazz, String methodName,  Class<?>... parameterTypes){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return HiddenApiBypass.getDeclaredMethod(clazz,methodName,parameterTypes);
+        }
+        return null;
+    }
+}
+
+```
+
+最后设置可反射隐藏api
+BlackReflectionConfig.reflectorApi=new HideApiUtil();
+
+ 
+
 
 ### Demo
 #### 1. 如果你需要反射 top.niunaijun.app.bean.TestReflection 中的各种方法，参考：[MainActivity.java](https://github.com/CodingGay/BlackReflection/blob/main/app/src/main/java/top/niunaijun/app/MainActivity.java)

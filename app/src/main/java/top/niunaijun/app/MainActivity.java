@@ -12,6 +12,7 @@ import top.niunaijun.app.bean.TestReflection;
 import top.niunaijun.app.ref.BRActivityThread;
 import top.niunaijun.app.ref.BRTestReflection;
 import top.niunaijun.blackreflection.BlackReflection;
+import top.niunaijun.blackreflection.BlackReflectionConfig;
 import top.niunaijun.blackreflection.R;
 
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BlackReflection.CACHE = true;
-
+        BlackReflectionConfig.reflectorApi=new HideApiUtil();
         TestReflection testReflection = testBConstructor();
         Class<?> classReady = BRTestReflection.getRealClass();
         Log.d(TAG, "classReady: " + classReady);

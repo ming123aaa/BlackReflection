@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.0"
+    compileSdkVersion 33
+
 
     defaultConfig {
         applicationId "top.niunaijun.blackreflection"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
@@ -44,5 +44,6 @@ dependencies {
 //    implementation project(":core")
     implementation project(":core")
     annotationProcessor project(":compiler")
+    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:4.3'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
 }

@@ -9,6 +9,8 @@ import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import top.niunaijun.blackreflection.BlackReflectionConfig;
+
 public class Reflector {
     public static final String LOG_TAG ="Reflector";
     
@@ -129,6 +131,10 @@ public class Reflector {
                     // Ignored
                 }
             }
+            Field field = BlackReflectionConfig.findField(mType, name);
+            if (field!=null) {
+                return field;
+            }
             throw e;
         }
     }
@@ -188,6 +194,10 @@ public class Reflector {
                 } catch (NoSuchMethodException ex) {
                     // Ignored
                 }
+            }
+            Method declaredMethod = BlackReflectionConfig.getDeclaredMethod(mType, name, parameterTypes);
+            if (declaredMethod!=null){
+                return declaredMethod;
             }
             throw e;
         }
